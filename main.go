@@ -1,38 +1,23 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-// importa el archivo database.go
-import "github.com/MathiasMinacapilli/go-example/src/services/FinancesService"
+import "go-example/handlers"
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "Hola, mundo!")
-	})
+	mux := mux.NewRouter()
 
-	http.HandleFunc("/data", func(w http.ResponseWriter, r *http.Request) {
-		// llama a la función que obtiene los datos de la base de datos
-		data, err := FinancesService.getDataFromDatabase()
-		if err != nil {
-			http.Error(w, "Error al obtener los datos", http.StatusInternalServerError)
-			return
-		}
+	mux.HandleFunc("/api/user", handlers.GetUsers).Methods("GET")
+	mux.HandleFunc("/api/user", handlers.GetUser).Methods("POST")
+	mux.HandleFunc("/api/user/{userId:[0-9]+}", nil).Methods("GET")
+	mux.HandleFunc("/api/user/{userId:[0-9]+}", nil).Methods("PUT")
+	mux.HandleFunc("/api/user/{userId:[0-9]+}", nil).Methods("DELETE")
 
-		// Establecer el encabezado de la respuesta como JSON
-		w.Header().Set("Content-Type", "application/json")
-
-		// Codificar los datos como JSON y escribirlos en la respuesta
-		err = json.NewEncoder(w).Encode(data)
-		if err != nil {
-			http.Error(w, "Error al codificar los datos", http.StatusInternalServerError)
-			return
-		}
-	})
-
-	http.ListenAndServe(":8080", nil)
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }
 

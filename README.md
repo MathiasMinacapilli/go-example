@@ -10,10 +10,8 @@ Project of personal finances
 
 ## Actualizar dependencias
 
-go mod tidy
+`go mod tidy`
 
 ## Run project
 
-` go run .` 
-
-
+`go run main.go`
