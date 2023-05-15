@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"encoding/json"
 )
-import "go-example/model"
+import "go-example/models"
 
 func GetUsers(response http.ResponseWriter, request *http.Request) {
-	users := []model.User{
+	// TODO: db.Database.First(&models.User)
+
+	users := []models.User{
 		{ID: 1, Name: "Alice", Email: "alice@example.com"},
 		{ID: 2, Name: "Bob", Email: "bob@example.com"},
 		{ID: 3, Name: "Charlie", Email: "charlie@example.com"},

@@ -10,6 +10,7 @@ import (
 import "go-example/handlers"
 
 func main() {
+	// models.CreateModel()
 	mux := mux.NewRouter()
 
 	mux.HandleFunc("/api/user", handlers.GetUsers).Methods("GET")
